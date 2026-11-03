@@ -40,10 +40,6 @@ yarn-error.*
 /ios
 /android
 
-# Automated test output
-/test-results/
-/playwright-report/
-
 # Local AI assistant configuration
 .claude/
 AGENTS.md
