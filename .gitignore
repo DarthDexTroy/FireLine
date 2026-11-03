@@ -39,3 +39,12 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+
+# Automated test output
+/test-results/
+/playwright-report/
+
+# Local AI assistant configuration
+.claude/
+AGENTS.md
+CLAUDE.md
