@@ -1,24 +1,18 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { router } from "expo-router";
 import { useApp } from "../context/AppContext";
 import { visibleNotifications } from "../lib/state";
 import { Badge, Button, Card, Empty, Screen } from "../components/UI";
 import { styles as s, colors as c } from "../styles/theme";
+
 export default function Notifications() {
   const { state, dispatch } = useApp();
   const notifications = visibleNotifications(state);
   return (
-    <Screen title="Notifications" subtitle="Your simulated local alerts.">
+    <Screen title="Notifications" subtitle="Your local alerts.">
       {notifications.length > 0 ? (
         <>
-          <Button
-            title="Mark All as Read"
-            secondary
-            onPress={() =>
-              dispatch({ type: "read", ids: notifications.map((a) => a.id) })
-            }
-          />
           {notifications.map((alert) => (
             <Card
               key={alert.id}
@@ -37,31 +31,27 @@ export default function Notifications() {
               <Text style={s.heading}>{alert.title}</Text>
               <Text style={s.body}>{alert.description}</Text>
               <Text style={s.small}>
-                Scenario near {state.location} · {alert.time}
+                Near {state.location} · {alert.time}
               </Text>
               <Button
-                title="View Related Alert"
+                title="Open Update"
                 onPress={() => {
                   dispatch({ type: "read", ids: [alert.id] });
                   router.push({
-                    pathname: "/updates/[id]",
-                    params: { id: alert.id },
+                    pathname: "/updates",
+                    params: { open: alert.id },
                   });
                 }}
                 secondary
               />
-              {!state.read.includes(alert.id) && (
-                <Button
-                  title="Mark as Read"
-                  onPress={() => dispatch({ type: "read", ids: [alert.id] })}
-                  secondary
-                />
-              )}
-              <Button
-                title="Clear Notification"
+              <Pressable
+                accessibilityRole="button"
+                accessibilityLabel="Clear notification"
                 onPress={() => dispatch({ type: "clear", ids: [alert.id] })}
-                secondary
-              />
+                style={{ minHeight: 44, justifyContent: "center" }}
+              >
+                <Text style={{ color: c.primary, fontWeight: "700", fontSize: 13 }}>Clear Notification</Text>
+              </Pressable>
             </Card>
           ))}
           <Button

@@ -5,54 +5,30 @@ import { shelters } from "../../data/demo";
 import { useApp } from "../../context/AppContext";
 import { Button, Card, Detail, Empty, Screen } from "../../components/UI";
 import { WildfireMap } from "../../components/WildfireMap";
-import { styles as s, colors as c } from "../../styles/theme";
+import { styles as s } from "../../styles/theme";
 export default function Directions() {
   const { id } = useLocalSearchParams<{ id?: string }>();
   const { state, dispatch } = useApp();
-  const shelter = shelters.find((s) => s.id === (id || state.shelterId));
+  const shelter = shelters.find((item) => item.id === (id || state.shelterId));
   return (
-    <Screen title="Your Route" subtitle="Know your plan before you go.">
+    <Screen title="Route Preview" subtitle="Review your destination before leaving.">
       {!shelter ? (
-        <Empty
-          title="Choose a destination"
-          detail="Select a demonstration shelter to see its mock route."
-          href="/prepare/shelters"
-          button="Find Nearby Shelters"
-        />
+        <Empty title="Choose a destination" detail="Select a shelter to view its route preview." href="/prepare/shelters" button="Find Nearby Shelters" />
       ) : (
         <>
-          <Card style={{ backgroundColor: "#FFF3E0", borderColor: "#F1D7B3" }}>
-            <Text style={{ color: "#89551B", fontWeight: "600", fontSize: 13 }}>
-              Simulated route for demonstration only.
-            </Text>
-            <Text style={s.small}>
-              This is not a geographic map or real evacuation guidance.
-            </Text>
-          </Card>
           <Card>
             <Detail label="From" value={`Home — ${state.location}`} />
             <Detail label="To" value={shelter.name} />
-            <Text style={[s.heading, { color: c.green }]}>
-              {shelter.minutes} min · {shelter.distanceMiles} miles
-            </Text>
+            <Text style={s.heading}>{shelter.distanceMiles} miles · About {shelter.minutes} min</Text>
           </Card>
           <WildfireMap destination={shelter} preview />
+          <Card style={{ backgroundColor: "#FFF3E0", borderColor: "#F1D7B3" }}>
+            <Text style={s.small}>Preview route only. Check official guidance before traveling.</Text>
+          </Card>
           <Button
-            title="Save Selected Shelter"
+            title={state.shelterId === shelter.id ? "Back to My Plan" : "Choose This Shelter"}
             disabled={!shelter.available}
-            onPress={() => {
-              dispatch({ type: "shelter", id: shelter.id });
-              router.push("/prepare/plan");
-            }}
-            icon="bookmark-outline"
-          />
-          <Button
-            title="Back to Shelter Details"
-            href={{
-              pathname: "/prepare/shelter-details",
-              params: { id: shelter.id },
-            }}
-            secondary
+            onPress={() => { dispatch({ type: "shelter", id: shelter.id }); router.push("/prepare/plan"); }}
           />
         </>
       )}

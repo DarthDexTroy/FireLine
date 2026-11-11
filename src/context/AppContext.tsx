@@ -52,7 +52,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       .catch(() => {
         if (active)
           setError(
-            "Saved data could not be loaded. You can continue with a fresh demo.",
+            "Saved data could not be loaded. You can continue with a fresh start.",
           );
       })
       .finally(() => {

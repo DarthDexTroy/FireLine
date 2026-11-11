@@ -54,20 +54,22 @@ export function Button({
         paddingHorizontal: 18,
         paddingVertical: 12,
         borderRadius: 14,
-        backgroundColor: secondary ? c.blush : c.primary,
+        backgroundColor: secondary ? "#FFFFFF" : c.primary,
         alignItems: "center",
         justifyContent: "center",
         flexDirection: "row",
         gap: 8,
+        borderWidth: 1,
+        borderColor: secondary ? c.border : c.primary,
         opacity: disabled ? 0.45 : pressed ? 0.75 : 1,
       })}
     >
       {icon && (
-        <Icon name={icon} color={secondary ? c.primary : "white"} size={18} />
+        <Icon name={icon} color={secondary ? c.navy : "white"} size={18} />
       )}
       <Text
         style={{
-          color: secondary ? c.primary : "white",
+          color: secondary ? c.navy : "white",
           fontSize: 14,
           fontWeight: "600",
           textAlign: "center",
@@ -127,7 +129,7 @@ export function Screen({
     <ScrollView
       {...props}
       contentContainerStyle={[
-        { padding: 22, gap: 22, paddingBottom: 30 },
+        { padding: 17, gap: 15, paddingBottom: 24 },
         props.contentContainerStyle,
       ]}
       showsVerticalScrollIndicator={false}
@@ -143,7 +145,7 @@ export function Screen({
           />
         )}
         <View style={{ flex: 1 }}>
-          <Text style={s.title}>{title}</Text>
+          <Text style={[s.title,{fontSize:23}]}>{title}</Text>
           {subtitle && (
             <Text style={[s.body, { marginTop: 6 }]}>{subtitle}</Text>
           )}
@@ -309,8 +311,7 @@ export function Warning() {
         </Text>
       </View>
       <Text style={[s.body, { color: "#87521C" }]}>
-        Prepare your household in case an evacuation order is issued in this
-        simulated scenario.
+        Prepare essential belongings and monitor official instructions. An evacuation warning is not an order to leave.
       </Text>
     </Card>
   );

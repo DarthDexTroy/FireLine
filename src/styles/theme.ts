@@ -6,12 +6,12 @@ export const colors = {
   green: "#2E6657",
   pale: "#E6F2EA",
   white: "#FFFFFF",
-  background: "#F5F7F8",
+  background: "#FFFFFF",
   red: "#D64545",
   orange: "#F29F38",
   yellow: "#F4C95D",
   safe: "#38A169",
-  muted: "#697B84",
+  muted: "#52616E",
   border: "#E2E8E7",
 };
 export const styles = StyleSheet.create({
@@ -30,12 +30,12 @@ export const styles = StyleSheet.create({
   },
   heading: {
     color: colors.navy,
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "700",
     letterSpacing: -0.4,
   },
   subheading: { color: colors.navy, fontSize: 16, fontWeight: "600" },
-  body: { color: colors.muted, fontSize: 14, lineHeight: 22 },
+  body: { color: colors.muted, fontSize: 14, lineHeight: 21 },
   small: { color: colors.muted, fontSize: 12, lineHeight: 18 },
   eyebrow: {
     color: colors.green,
@@ -46,8 +46,8 @@ export const styles = StyleSheet.create({
   },
   card: {
     backgroundColor: colors.white,
-    borderRadius: 20,
-    padding: 20,
+    borderRadius: 15,
+    padding: 16,
     borderWidth: 1,
     borderColor: colors.border,
     gap: 14,
