@@ -3,7 +3,7 @@ import { PanResponder, Pressable, Text, View } from "react-native";
 import Svg, { Circle, Path, Rect, Text as SvgText } from "react-native-svg";
 import { shelters, type Shelter } from "../data/demo";
 import { Icon, IconButton, Button, Badge } from "./UI";
-import { colors as c, styles as s } from "../styles/theme";
+import { useTheme } from "../context/ThemeContext";
 export type Marker = "fire" | "home" | "road" | string;
 function createMapResponder(
   setOffset: React.Dispatch<React.SetStateAction<{ x: number; y: number }>>,
@@ -32,6 +32,7 @@ export function WildfireMap({
   destination?: Shelter;
   preview?: boolean;
 }) {
+  const { styles, theme } = useTheme();
   const [zoom, setZoom] = useState(0.8);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [selected, setSelected] = useState<Marker | null>(null);
@@ -52,7 +53,7 @@ export function WildfireMap({
       x: 430,
       y: 210,
       icon: "flame" as const,
-      color: c.red,
+      color: theme.danger,
       label: "Oak Valley Wildfire",
     },
     {
@@ -68,7 +69,7 @@ export function WildfireMap({
       x: s.x,
       y: s.y,
       icon: "business" as const,
-      color: s.available ? c.green : "#78847F",
+      color: s.available ? theme.accent : "#78847F",
       label: s.name,
     })),
   ];
@@ -83,9 +84,9 @@ export function WildfireMap({
           height,
           borderRadius: 20,
           overflow: "hidden",
-          backgroundColor: "#E8EDE2",
+          backgroundColor: theme.mode === "dark" ? "#2A3B40" : "#E8EDE2",
           borderWidth: 1,
-          borderColor: "#D7DFD1",
+          borderColor: theme.border,
         }}
       >
         <View {...pan.panHandlers} style={{ position: "absolute", inset: 0 }}>
@@ -193,7 +194,7 @@ export function WildfireMap({
                   />
                   <Path
                     d={`M270 315 L270 375 L${destination.x} 375 L${destination.x} ${destination.y}`}
-                    stroke={c.green}
+                    stroke={theme.accent}
                     strokeWidth="6"
                     fill="none"
                     strokeDasharray="9 5"
@@ -203,7 +204,7 @@ export function WildfireMap({
                     cy="315"
                     r="7"
                     fill="white"
-                    stroke={c.green}
+                    stroke={theme.accent}
                     strokeWidth="3"
                   />
                 </>
@@ -241,14 +242,14 @@ export function WildfireMap({
             position: "absolute",
             left: 12,
             top: 12,
-            backgroundColor: "#FFFFFFED",
+            backgroundColor: theme.surfaceElevated,
             borderRadius: 8,
             padding: 8,
           }}
         >
           <Text
             style={{
-              color: c.green,
+              color: theme.accent,
               fontSize: 10,
               fontWeight: "700",
               letterSpacing: 1,
@@ -320,7 +321,7 @@ export function WildfireMap({
             position: "absolute",
             bottom: 20,
             right: 14,
-            color: c.green,
+            color: theme.accent,
             fontSize: 11,
           }}
         >
@@ -334,7 +335,7 @@ export function WildfireMap({
             ["#F29F38", "Warning"],
             ["#F4C95D", "Advisory"],
           ].map(([color, text]) => (
-            <View key={text} style={[s.row, { gap: 5 }]}>
+            <View key={text} style={[styles.row, { gap: 5 }]}>
               <View
                 style={{
                   width: 9,
@@ -343,15 +344,15 @@ export function WildfireMap({
                   backgroundColor: color,
                 }}
               />
-              <Text style={s.small}>{text} zone</Text>
+              <Text style={styles.small}>{text} zone</Text>
             </View>
           ))}
         </View>
       )}
       {selected && (
-        <View style={[s.card, { borderColor: "#B3CCBD" }]}>
-          <View style={s.between}>
-            <Text style={[s.heading, { flex: 1 }]}>
+        <View style={[styles.card, { borderColor: theme.selectedBorder }]}>
+          <View style={styles.between}>
+            <Text style={[styles.heading, { flex: 1 }]}>
               {selected === "fire"
                 ? "Oak Valley Wildfire"
                 : selected === "home"
@@ -369,7 +370,7 @@ export function WildfireMap({
           {selected === "fire" ? (
             <>
               <Badge severity="warning" />
-              <Text style={s.body}>
+              <Text style={styles.body}>
                 4.8 miles away · Active{"\n"}Evacuation level: Warning{"\n"}
                 Scenario updated 5 minutes ago.
               </Text>
@@ -378,7 +379,7 @@ export function WildfireMap({
             </>
           ) : shelter ? (
             <>
-              <Text style={s.body}>
+              <Text style={styles.body}>
                 {shelter.distanceMiles} miles · {shelter.availability} ·{" "}
                 {shelter.petFriendly ? "Pets welcome" : "No pet facilities"}
               </Text>
@@ -392,7 +393,7 @@ export function WildfireMap({
             </>
           ) : selected === "home" ? (
             <>
-              <Text style={s.body}>
+              <Text style={styles.body}>
                 Your fictional home marker. No GPS data is collected.
               </Text>
               <Button
@@ -403,7 +404,7 @@ export function WildfireMap({
             </>
           ) : (
             <>
-              <Text style={s.body}>
+              <Text style={styles.body}>
                 Oak Valley Road is closed in this scenario. Do not use this map
                 for real travel.
               </Text>

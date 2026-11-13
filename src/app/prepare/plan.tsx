@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Text } from "react-native";
 import { shelters } from "../../data/demo";
 import { useApp } from "../../context/AppContext";
+import { useTheme } from "../../context/ThemeContext";
 import { reducer } from "../../lib/state";
 import {
   Badge,
@@ -12,9 +13,9 @@ import {
   Progress,
   Screen,
 } from "../../components/UI";
-import { styles as s, colors as c } from "../../styles/theme";
 export default function Plan() {
   const { state, dispatch, persist } = useApp();
+  const { styles, theme } = useTheme();
   const shelter = shelters.find((s) => s.id === state.shelterId);
   const [message, setMessage] = useState("");
   const [saving, setSaving] = useState(false);
@@ -41,14 +42,14 @@ export default function Plan() {
     <Screen title="My Evacuation Plan" subtitle="Everything in one place.">
       <Card>
         <Icon name="shield-checkmark-outline" size={38} />
-        <Text style={s.heading}>
+        <Text style={styles.heading}>
           {state.completed.length === 14
             ? "Checklist complete"
             : "Your plan is taking shape"}
         </Text>
         <Progress />
         <Badge severity="warning" />
-        <Text style={s.body}>
+        <Text style={styles.body}>
           Evacuation status: Prepare to Evacuate · Simulated
         </Text>
       </Card>
@@ -61,7 +62,7 @@ export default function Plan() {
           <>
             <Detail label="Route" value={`Home → ${shelter.name}`} />
             <Detail label="Starting location" value={state.location} />
-            <Text style={s.small}>
+            <Text style={styles.small}>
               {shelter.distanceMiles} miles · About {shelter.minutes} minutes ·
               Simulated
             </Text>
@@ -72,7 +73,7 @@ export default function Plan() {
         )}
       </Card>
       {state.plan && (
-        <Text style={s.small}>
+        <Text style={styles.small}>
           Last saved: {new Date(state.plan.editedAt).toLocaleString()}
           {changed
             ? "\nYour current changes have not been saved to the plan yet."
@@ -83,8 +84,8 @@ export default function Plan() {
         <Text
           accessibilityRole="alert"
           style={{
-            color: c.green,
-            backgroundColor: c.pale,
+            color: theme.accent,
+            backgroundColor: theme.surfaceMuted,
             borderRadius: 12,
             padding: 15,
           }}

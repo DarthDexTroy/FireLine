@@ -3,12 +3,13 @@ import { Text, View } from "react-native";
 import { router, useLocalSearchParams } from "expo-router";
 import { shelters } from "../../data/demo";
 import { useApp } from "../../context/AppContext";
+import { useTheme } from "../../context/ThemeContext";
 import { Button, Card, Detail, Empty, Icon, Screen } from "../../components/UI";
-import { styles as s, colors as c } from "../../styles/theme";
 export default function ShelterDetails() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const shelter = shelters.find((s) => s.id === id);
   const { dispatch, state } = useApp();
+  const { styles, theme } = useTheme();
   return (
     <Screen title="Shelter Details">
       {!shelter ? (
@@ -23,7 +24,7 @@ export default function ShelterDetails() {
           <Card>
             <View
               style={{
-                backgroundColor: c.pale,
+                backgroundColor: theme.surfaceMuted,
                 height: 110,
                 borderRadius: 14,
                 alignItems: "center",
@@ -32,9 +33,9 @@ export default function ShelterDetails() {
             >
               <Icon name="school-outline" size={58} />
             </View>
-            <Text style={s.title}>{shelter.name}</Text>
-            <Text style={s.body}>{shelter.address}</Text>
-            <View style={s.divider} />
+            <Text style={styles.title}>{shelter.name}</Text>
+            <Text style={styles.body}>{shelter.address}</Text>
+            <View style={styles.divider} />
             <Detail
               label="Distance from scenario home"
               value={`${shelter.distanceMiles} miles · ${shelter.minutes} min`}
@@ -53,11 +54,11 @@ export default function ShelterDetails() {
             />
           </Card>
           <Card>
-            <Text style={s.heading}>Facilities</Text>
+            <Text style={styles.heading}>Facilities</Text>
             {shelter.facilities.map((f) => (
-              <View style={s.row} key={f}>
+              <View style={styles.row} key={f}>
                 <Icon name="checkmark-circle-outline" size={20} />
-                <Text style={s.body}>{f}</Text>
+                <Text style={styles.body}>{f}</Text>
               </View>
             ))}
           </Card>

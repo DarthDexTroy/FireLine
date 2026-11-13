@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import { Button, Card, Icon, Screen } from "../../components/UI";
 import { filterShelters } from "../../lib/state";
-import { styles as s, colors as c } from "../../styles/theme";
+import { useTheme } from "../../context/ThemeContext";
 export default function Shelters() {
   const [pet, setPet] = useState(false);
   const [available, setAvailable] = useState(false);
   const [closest, setClosest] = useState(false);
+  const { styles, theme } = useTheme();
   const results = filterShelters(pet, available, closest);
   const clear = () => {
     setPet(false);
@@ -18,7 +19,7 @@ export default function Shelters() {
       title="Nearby Shelters"
       subtitle="Find a place that fits your household."
     >
-      <Text style={s.small}>
+      <Text style={styles.small}>
         Fictional shelters · Distances from the scenario home
       </Text>
       <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 8 }}>
@@ -51,14 +52,14 @@ export default function Shelters() {
               minHeight: 44,
               paddingHorizontal: 16,
               justifyContent: "center",
-              backgroundColor: f.active ? c.green : "white",
+              backgroundColor: f.active ? theme.accent : theme.surface,
               borderWidth: 1,
-              borderColor: f.active ? c.green : c.border,
+              borderColor: f.active ? theme.accent : theme.border,
             }}
           >
             <Text
               style={{
-                color: f.active ? "white" : c.green,
+                color: f.active ? theme.textOnPrimary : theme.accent,
                 fontSize: 12,
                 fontWeight: "600",
               }}
@@ -68,14 +69,14 @@ export default function Shelters() {
           </Pressable>
         ))}
       </View>
-      <Text accessibilityLiveRegion="polite" style={s.small}>
+      <Text accessibilityLiveRegion="polite" style={styles.small}>
         {results.length} shelters {pet ? "· Pet friendly" : ""}
         {available ? " · Available or limited space" : ""}
         {closest ? " · Nearest first" : ""}
       </Text>
       {results.length === 0 && (
         <Card>
-          <Text style={s.heading}>
+          <Text style={styles.heading}>
             No shelters match your selected filters.
           </Text>
           <Button title="Clear Filters" onPress={clear} />
@@ -83,9 +84,13 @@ export default function Shelters() {
       )}
       {results.map((shelter) => (
         <Card key={shelter.id}>
-          <View style={s.between}>
+          <View style={styles.between}>
             <View
-              style={{ backgroundColor: c.pale, padding: 12, borderRadius: 14 }}
+              style={{
+                backgroundColor: theme.surfaceMuted,
+                padding: 12,
+                borderRadius: 14,
+              }}
             >
               <Icon name="business-outline" size={26} />
             </View>
@@ -93,23 +98,25 @@ export default function Shelters() {
               style={{
                 fontSize: 12,
                 color:
-                  shelter.availability === "Available" ? c.green : "#936127",
+                  shelter.availability === "Available"
+                    ? theme.accent
+                    : theme.routeNoticeText,
                 fontWeight: "600",
               }}
             >
               ● {shelter.availability}
             </Text>
           </View>
-          <Text style={s.heading}>{shelter.name}</Text>
-          <View style={s.row}>
+          <Text style={styles.heading}>{shelter.name}</Text>
+          <View style={styles.row}>
             <Icon name="location-outline" size={16} />
-            <Text style={s.body}>
+            <Text style={styles.body}>
               {shelter.distanceMiles} miles away · {shelter.minutes} min
             </Text>
           </View>
-          <View style={s.row}>
+          <View style={styles.row}>
             <Icon name="paw-outline" size={16} />
-            <Text style={s.small}>
+            <Text style={styles.small}>
               {shelter.petFriendly ? "Pet friendly" : "No pet accommodations"}
             </Text>
           </View>

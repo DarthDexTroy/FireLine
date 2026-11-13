@@ -3,12 +3,13 @@ import { Text } from "react-native";
 import { router, useLocalSearchParams } from "expo-router";
 import { shelters } from "../../data/demo";
 import { useApp } from "../../context/AppContext";
+import { useTheme } from "../../context/ThemeContext";
 import { Button, Card, Detail, Empty, Screen } from "../../components/UI";
 import { WildfireMap } from "../../components/WildfireMap";
-import { styles as s, colors as c } from "../../styles/theme";
 export default function Directions() {
   const { id } = useLocalSearchParams<{ id?: string }>();
   const { state, dispatch } = useApp();
+  const { styles, theme } = useTheme();
   const shelter = shelters.find((s) => s.id === (id || state.shelterId));
   return (
     <Screen title="Your Route" subtitle="Know your plan before you go.">
@@ -21,18 +22,29 @@ export default function Directions() {
         />
       ) : (
         <>
-          <Card style={{ backgroundColor: "#FFF3E0", borderColor: "#F1D7B3" }}>
-            <Text style={{ color: "#89551B", fontWeight: "600", fontSize: 13 }}>
+          <Card
+            style={{
+              backgroundColor: theme.routeNoticeBackground,
+              borderColor: theme.routeNoticeBorder,
+            }}
+          >
+            <Text
+              style={{
+                color: theme.routeNoticeText,
+                fontWeight: "600",
+                fontSize: 13,
+              }}
+            >
               Simulated route for demonstration only.
             </Text>
-            <Text style={s.small}>
+            <Text style={styles.small}>
               This is not a geographic map or real evacuation guidance.
             </Text>
           </Card>
           <Card>
             <Detail label="From" value={`Home — ${state.location}`} />
             <Detail label="To" value={shelter.name} />
-            <Text style={[s.heading, { color: c.green }]}>
+            <Text style={[styles.heading, { color: theme.accent }]}>
               {shelter.minutes} min · {shelter.distanceMiles} miles
             </Text>
           </Card>

@@ -12,11 +12,13 @@ import {
   Section,
   type IconName,
 } from "../components/UI";
-import { colors as c, styles as s } from "../styles/theme";
+import { ThemeToggle } from "../components/ThemeToggle";
+import { useTheme } from "../context/ThemeContext";
 import { useApp } from "../context/AppContext";
 import { visibleNotifications } from "../lib/state";
 export default function Home() {
   const { state } = useApp();
+  const { theme, styles } = useTheme();
   const unread = visibleNotifications(state).filter(
     (a) => !state.read.includes(a.id),
   ).length;
@@ -25,28 +27,31 @@ export default function Home() {
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{ padding: 22, paddingBottom: 30, gap: 23 }}
     >
-      <View style={s.between}>
-        <View style={s.row}>
+      <View style={styles.between}>
+        <View style={styles.row}>
           <View
             style={{
               width: 42,
               height: 46,
               borderRadius: 14,
-              backgroundColor: c.primary,
+              backgroundColor: theme.primary,
               alignItems: "center",
               justifyContent: "center",
             }}
           >
-            <Icon name="flame" color="white" size={27} />
+            <Icon name="flame" color={theme.textOnPrimary} size={27} />
           </View>
           <View>
-            <Text style={[s.title, { fontSize: 31 }]}>Fireline</Text>
-            <Text style={{ fontSize: 11, color: c.muted, marginTop: 3 }}>
+            <Text style={[styles.title, { fontSize: 31 }]}>Fireline</Text>
+            <Text
+              style={{ fontSize: 11, color: theme.textSecondary, marginTop: 3 }}
+            >
               Stay informed. Stay prepared.
             </Text>
           </View>
         </View>
         <View style={{ flexDirection: "row", gap: 6 }}>
+          <ThemeToggle />
           <IconButton
             name="settings-outline"
             label="Open settings"
@@ -64,7 +69,7 @@ export default function Home() {
                 position: "absolute",
                 right: -2,
                 top: -3,
-                backgroundColor: c.red,
+                backgroundColor: theme.danger,
                 borderRadius: 10,
                 minWidth: 18,
                 height: 18,
@@ -84,18 +89,18 @@ export default function Home() {
         accessibilityLabel="Change saved location"
         onPress={() => router.push("/settings/location")}
         style={[
-          s.row,
+          styles.row,
           {
             borderBottomWidth: 1,
-            borderBottomColor: c.border,
+            borderBottomColor: theme.border,
             paddingBottom: 18,
           },
         ]}
       >
         <Icon name="location-outline" size={22} />
         <View style={{ flex: 1, gap: 3 }}>
-          <Text style={s.subheading}>{state.location}</Text>
-          <Text style={s.small}>Your saved demonstration location</Text>
+          <Text style={styles.subheading}>{state.location}</Text>
+          <Text style={styles.small}>Your saved demonstration location</Text>
         </View>
         <Icon name="chevron-down" size={17} />
       </Pressable>
@@ -105,7 +110,7 @@ export default function Home() {
         end={{ x: 1, y: 1 }}
         style={{ padding: 22, borderRadius: 24, gap: 17, overflow: "hidden" }}
       >
-        <View style={s.between}>
+        <View style={styles.between}>
           <Text
             style={{
               color: "#F7D5C3",
@@ -169,8 +174,10 @@ export default function Home() {
         />
       </LinearGradient>
       <View style={{ gap: 12 }}>
-        <Text style={s.eyebrow}>A little preparation. More peace of mind.</Text>
-        <Text style={s.heading}>Your next steps</Text>
+        <Text style={styles.eyebrow}>
+          A little preparation. More peace of mind.
+        </Text>
+        <Text style={styles.heading}>Your next steps</Text>
         {(
           [
             {
@@ -202,8 +209,8 @@ export default function Home() {
             key={item.title}
             onPress={() => router.push(item.href)}
             style={({ pressed }) => [
-              s.card,
-              s.row,
+              styles.card,
+              styles.row,
               { padding: 16, opacity: pressed ? 0.7 : 1 },
             ]}
           >
@@ -212,7 +219,7 @@ export default function Home() {
                 width: 46,
                 height: 48,
                 borderRadius: 14,
-                backgroundColor: c.pale,
+                backgroundColor: theme.surfaceMuted,
                 alignItems: "center",
                 justifyContent: "center",
               }}
@@ -220,15 +227,17 @@ export default function Home() {
               <Icon name={item.icon as IconName} />
             </View>
             <View style={{ flex: 1, gap: 5 }}>
-              <Text style={s.subheading}>{item.title}</Text>
-              <Text style={[s.small, { fontSize: 11 }]}>
+              <Text style={styles.subheading}>{item.title}</Text>
+              <Text style={[styles.small, { fontSize: 11 }]}>
                 {item.description}
               </Text>
-              <Text style={{ fontSize: 11, color: c.green, fontWeight: "600" }}>
+              <Text
+                style={{ fontSize: 11, color: theme.accent, fontWeight: "600" }}
+              >
                 {item.action} →
               </Text>
             </View>
-            <Icon name="chevron-forward" color="#8B9B95" size={18} />
+            <Icon name="chevron-forward" color={theme.iconMuted} size={18} />
           </Pressable>
         ))}
       </View>
@@ -247,7 +256,7 @@ export default function Home() {
           />
         </Card>
       </View>
-      <Text style={[s.small, { textAlign: "center", fontSize: 10 }]}>
+      <Text style={[styles.small, { textAlign: "center", fontSize: 10 }]}>
         Educational demonstration. Not for emergency use.
       </Text>
     </ScrollView>

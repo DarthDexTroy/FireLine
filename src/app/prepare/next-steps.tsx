@@ -2,16 +2,17 @@ import React from "react";
 import { Text, View } from "react-native";
 import { categories, checklist } from "../../data/demo";
 import { useApp } from "../../context/AppContext";
+import { useTheme } from "../../context/ThemeContext";
 import { Button, Card, Icon, Progress, Screen } from "../../components/UI";
-import { styles as s } from "../../styles/theme";
 export default function NextSteps() {
   const { state } = useApp();
+  const { styles } = useTheme();
   return (
     <Screen title="Next Steps" subtitle="Give your plan a destination.">
       <Card>
         <Icon name="compass-outline" size={40} />
-        <Text style={s.heading}>You’re making progress.</Text>
-        <Text style={s.body}>
+        <Text style={styles.heading}>You’re making progress.</Text>
+        <Text style={styles.body}>
           Review nearby shelters and create your evacuation plan. You can return
           to your checklist at any time.
         </Text>
@@ -19,9 +20,9 @@ export default function NextSteps() {
       </Card>
       <Card>
         {categories.map((cat) => (
-          <View key={cat.id} style={s.between}>
-            <Text style={s.subheading}>{cat.title}</Text>
-            <Text style={s.body}>
+          <View key={cat.id} style={styles.between}>
+            <Text style={styles.subheading}>{cat.title}</Text>
+            <Text style={styles.body}>
               {
                 checklist.filter(
                   (i) =>

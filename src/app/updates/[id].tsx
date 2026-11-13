@@ -11,10 +11,11 @@ import {
   Icon,
   Screen,
 } from "../../components/UI";
-import { styles as s, colors as c } from "../../styles/theme";
+import { useTheme } from "../../context/ThemeContext";
 export default function AlertDetails() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const alert = alerts.find((a) => a.id === id);
+  const { styles, theme } = useTheme();
   return (
     <Screen title="Alert Details" subtitle="Understand what’s happening.">
       {!alert ? (
@@ -27,22 +28,22 @@ export default function AlertDetails() {
       ) : (
         <>
           <Card>
-            <View style={s.between}>
+            <View style={styles.between}>
               <Badge severity={alert.severity} />
-              <Icon name="flame-outline" color={c.orange} size={32} />
+              <Icon name="flame-outline" color={theme.warning} size={32} />
             </View>
-            <Text style={[s.title, { fontSize: 27 }]}>{alert.title}</Text>
-            <Text style={s.small}>SIMULATED ALERT · {alert.time}</Text>
-            <View style={s.divider} />
+            <Text style={[styles.title, { fontSize: 27 }]}>{alert.title}</Text>
+            <Text style={styles.small}>SIMULATED ALERT · {alert.time}</Text>
+            <View style={styles.divider} />
             <Detail label="Affected area" value="Oak Valley · Eastern Ridge" />
-            <Text style={s.body}>{alert.detail}</Text>
+            <Text style={styles.body}>{alert.detail}</Text>
           </Card>
-          <Card style={{ backgroundColor: c.pale }}>
-            <View style={s.row}>
+          <Card style={{ backgroundColor: theme.surfaceMuted }}>
+            <View style={styles.row}>
               <Icon name="shield-checkmark-outline" />
-              <Text style={s.heading}>Recommended action</Text>
+              <Text style={styles.heading}>Recommended action</Text>
             </View>
-            <Text style={s.body}>{alert.action}</Text>
+            <Text style={styles.body}>{alert.action}</Text>
           </Card>
           <Detail
             label="Related incident"

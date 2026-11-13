@@ -2,6 +2,7 @@ import React from "react";
 import { Text, View } from "react-native";
 import { categories, checklist } from "../../data/demo";
 import { useApp } from "../../context/AppContext";
+import { useTheme } from "../../context/ThemeContext";
 import {
   Button,
   Card,
@@ -10,9 +11,9 @@ import {
   Screen,
   Warning,
 } from "../../components/UI";
-import { styles as s } from "../../styles/theme";
 export default function Prepare() {
   const { state } = useApp();
+  const { styles } = useTheme();
   return (
     <Screen
       title="Prepare for Evacuation"
@@ -29,11 +30,11 @@ export default function Prepare() {
       </Card>
       {categories.map((cat) => (
         <Card key={cat.id}>
-          <View style={s.row}>
+          <View style={styles.row}>
             <Icon name={cat.icon} />
             <View style={{ flex: 1 }}>
-              <Text style={s.subheading}>{cat.title}</Text>
-              <Text style={s.small}>
+              <Text style={styles.subheading}>{cat.title}</Text>
+              <Text style={styles.small}>
                 {
                   checklist.filter(
                     (i) =>
