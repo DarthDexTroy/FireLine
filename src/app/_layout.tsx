@@ -19,7 +19,7 @@ const tabs: {
 function Shell() {
   const path = usePathname();
   const { storageError } = useApp();
-  const { theme } = useTheme();
+  const { theme, storageError: themeStorageError } = useTheme();
   return (
     <View
       style={{
@@ -66,6 +66,19 @@ function Shell() {
             }}
           >
             {storageError}
+          </Text>
+        )}
+        {themeStorageError && (
+          <Text
+            accessibilityRole="alert"
+            style={{
+              backgroundColor: theme.warningCardBackground,
+              color: theme.warningCardText,
+              padding: 12,
+              fontSize: 12,
+            }}
+          >
+            {themeStorageError}
           </Text>
         )}
         <View style={{ flex: 1 }}>

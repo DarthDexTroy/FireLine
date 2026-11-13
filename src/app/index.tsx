@@ -1,5 +1,11 @@
 import React from "react";
-import { Pressable, ScrollView, Text, View } from "react-native";
+import {
+  Pressable,
+  ScrollView,
+  Text,
+  View,
+  useWindowDimensions,
+} from "react-native";
 import { router } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
 import {
@@ -15,10 +21,13 @@ import {
 import { ThemeToggle } from "../components/ThemeToggle";
 import { useTheme } from "../context/ThemeContext";
 import { useApp } from "../context/AppContext";
+import { isCompactHomeHeader } from "../lib/layout";
 import { visibleNotifications } from "../lib/state";
 export default function Home() {
   const { state } = useApp();
   const { theme, styles } = useTheme();
+  const { width } = useWindowDimensions();
+  const compactHeader = isCompactHomeHeader(width);
   const unread = visibleNotifications(state).filter(
     (a) => !state.read.includes(a.id),
   ).length;
@@ -27,8 +36,10 @@ export default function Home() {
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{ padding: 22, paddingBottom: 30, gap: 23 }}
     >
-      <View style={styles.between}>
-        <View style={styles.row}>
+      <View
+        style={[styles.between, { flexWrap: "wrap", alignItems: "flex-start" }]}
+      >
+        <View style={[styles.row, { flexShrink: 1, minWidth: 0 }]}>
           <View
             style={{
               width: 42,
@@ -50,7 +61,16 @@ export default function Home() {
             </Text>
           </View>
         </View>
-        <View style={{ flexDirection: "row", gap: 6 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            gap: 6,
+            marginLeft: compactHeader ? 0 : "auto",
+            width: compactHeader ? "100%" : undefined,
+            justifyContent: compactHeader ? "flex-end" : "flex-start",
+            marginTop: compactHeader ? 8 : 0,
+          }}
+        >
           <ThemeToggle />
           <IconButton
             name="settings-outline"
@@ -77,7 +97,13 @@ export default function Home() {
                 justifyContent: "center",
               }}
             >
-              <Text style={{ color: "white", fontSize: 10, fontWeight: "700" }}>
+              <Text
+                style={{
+                  color: theme.textOnDanger,
+                  fontSize: 10,
+                  fontWeight: "700",
+                }}
+              >
                 {unread}
               </Text>
             </View>

@@ -41,13 +41,13 @@ export default function Checklist() {
           >
             <Icon
               name={cat.icon}
-              color={index === i ? theme.textOnPrimary : theme.accent}
+              color={index === i ? theme.textOnAccent : theme.accent}
               size={21}
             />
             <Text
               style={{
                 fontSize: 11,
-                color: index === i ? theme.textOnPrimary : theme.accent,
+                color: index === i ? theme.textOnAccent : theme.accent,
                 fontWeight: "600",
               }}
             >
@@ -81,9 +81,7 @@ export default function Checklist() {
                   gap: 12,
                   minHeight: 82,
                   backgroundColor: checked
-                    ? theme.mode === "dark"
-                      ? "#263A35"
-                      : "#F0F7F1"
+                    ? theme.checklistCompletedBackground
                     : pressed
                       ? theme.background
                       : theme.surface,
@@ -106,7 +104,7 @@ export default function Checklist() {
                   {checked && (
                     <Icon
                       name="checkmark"
-                      color={theme.textOnPrimary}
+                      color={theme.textOnAccent}
                       size={18}
                     />
                   )}

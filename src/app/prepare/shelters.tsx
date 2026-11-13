@@ -59,7 +59,7 @@ export default function Shelters() {
           >
             <Text
               style={{
-                color: f.active ? theme.textOnPrimary : theme.accent,
+                color: f.active ? theme.textOnAccent : theme.accent,
                 fontSize: 12,
                 fontWeight: "600",
               }}

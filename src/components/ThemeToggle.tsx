@@ -31,7 +31,7 @@ export function ThemeToggle() {
       <Ionicons
         name={isDark ? "moon" : "sunny-outline"}
         size={20}
-        color={isDark ? theme.caution : theme.warning}
+        color={isDark ? theme.toggleMoonIcon : theme.toggleSunIcon}
       />
     </Pressable>
   );

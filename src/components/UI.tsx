@@ -57,26 +57,28 @@ export function Button({
         paddingHorizontal: 18,
         paddingVertical: 12,
         borderRadius: 14,
-        backgroundColor: secondary ? theme.surfaceMuted : theme.primary,
+        backgroundColor: secondary
+          ? theme.secondaryButtonBackground
+          : theme.primary,
         alignItems: "center",
         justifyContent: "center",
         flexDirection: "row",
         gap: 8,
         opacity: disabled ? 0.45 : pressed ? 0.75 : 1,
         borderWidth: 1,
-        borderColor: secondary ? theme.border : theme.primary,
+        borderColor: secondary ? theme.secondaryButtonBorder : theme.primary,
       })}
     >
       {icon && (
         <Icon
           name={icon}
-          color={secondary ? theme.primary : theme.textOnPrimary}
+          color={secondary ? theme.secondaryButtonText : theme.textOnPrimary}
           size={18}
         />
       )}
       <Text
         style={{
-          color: secondary ? theme.primary : theme.textOnPrimary,
+          color: secondary ? theme.secondaryButtonText : theme.textOnPrimary,
           fontSize: 14,
           fontWeight: "600",
           textAlign: "center",
