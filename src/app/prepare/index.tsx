@@ -1,7 +1,7 @@
 import React from "react";
-import { Text, View } from "react-native";
-import { categories, checklist } from "../../data/demo";
+import { Text } from "react-native";
 import { useApp } from "../../context/AppContext";
+<<<<<<< HEAD
 import { useTheme } from "../../context/ThemeContext";
 import {
   Button,
@@ -11,23 +11,26 @@ import {
   Screen,
   Warning,
 } from "../../components/UI";
+=======
+import { Button, Card, Screen, Warning } from "../../components/UI";
+import { styles as s } from "../../styles/theme";
+
+// Keep this screen for existing deep links, but remove competing category actions.
+// The tab bar opens the checklist directly.
+>>>>>>> origin/main
 export default function Prepare() {
   const { state } = useApp();
   const { styles } = useTheme();
   return (
-    <Screen
-      title="Prepare for Evacuation"
-      subtitle="A plan today. Peace of mind tomorrow."
-    >
+    <Screen title="Prepare for Evacuation" subtitle="Your next steps, in one place.">
       <Warning />
       <Card>
-        <Progress />
-        <Button
-          title="Start Preparing"
-          href="/prepare/checklist"
-          icon="bag-handle-outline"
-        />
+        <Text style={s.heading}>Household checklist</Text>
+        <Text style={s.small}>{state.completed.length} items marked packed · Checklist is optional</Text>
+        <Text style={s.body}>Review documents, essential items and pet supplies. You can continue without completing every item.</Text>
+        <Button title="Open Checklist" href="/prepare/checklist" icon="checkbox-outline" />
       </Card>
+<<<<<<< HEAD
       {categories.map((cat) => (
         <Card key={cat.id}>
           <View style={styles.row}>
@@ -56,8 +59,10 @@ export default function Prepare() {
           />
         </Card>
       ))}
+=======
+>>>>>>> origin/main
       <Button title="Find Nearby Shelters" href="/prepare/shelters" secondary />
-      <Button title="My Evacuation Plan" href="/prepare/plan" secondary />
+      {state.shelterId ? <Button title="View My Evacuation Plan" href="/prepare/plan" secondary /> : null}
     </Screen>
   );
 }

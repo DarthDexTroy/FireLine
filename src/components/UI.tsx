@@ -57,19 +57,26 @@ export function Button({
         paddingHorizontal: 18,
         paddingVertical: 12,
         borderRadius: 14,
+<<<<<<< HEAD
         backgroundColor: secondary
           ? theme.secondaryButtonBackground
           : theme.primary,
+=======
+        backgroundColor: secondary ? "#FFFFFF" : c.primary,
+>>>>>>> origin/main
         alignItems: "center",
         justifyContent: "center",
         flexDirection: "row",
         gap: 8,
+        borderWidth: 1,
+        borderColor: secondary ? c.border : c.primary,
         opacity: disabled ? 0.45 : pressed ? 0.75 : 1,
         borderWidth: 1,
         borderColor: secondary ? theme.secondaryButtonBorder : theme.primary,
       })}
     >
       {icon && (
+<<<<<<< HEAD
         <Icon
           name={icon}
           color={secondary ? theme.secondaryButtonText : theme.textOnPrimary}
@@ -79,6 +86,13 @@ export function Button({
       <Text
         style={{
           color: secondary ? theme.secondaryButtonText : theme.textOnPrimary,
+=======
+        <Icon name={icon} color={secondary ? c.navy : "white"} size={18} />
+      )}
+      <Text
+        style={{
+          color: secondary ? c.navy : "white",
+>>>>>>> origin/main
           fontSize: 14,
           fontWeight: "600",
           textAlign: "center",
@@ -141,7 +155,7 @@ export function Screen({
     <ScrollView
       {...props}
       contentContainerStyle={[
-        { padding: 22, gap: 22, paddingBottom: 30 },
+        { padding: 17, gap: 15, paddingBottom: 24 },
         props.contentContainerStyle,
       ]}
       showsVerticalScrollIndicator={false}
@@ -157,7 +171,11 @@ export function Screen({
           />
         )}
         <View style={{ flex: 1 }}>
+<<<<<<< HEAD
           <Text style={styles.title}>{title}</Text>
+=======
+          <Text style={[s.title,{fontSize:23}]}>{title}</Text>
+>>>>>>> origin/main
           {subtitle && (
             <Text style={[styles.body, { marginTop: 6 }]}>{subtitle}</Text>
           )}
@@ -343,9 +361,14 @@ export function Warning() {
           Evacuation Warning
         </Text>
       </View>
+<<<<<<< HEAD
       <Text style={[styles.body, { color: theme.warningCardText }]}>
         Prepare your household in case an evacuation order is issued in this
         simulated scenario.
+=======
+      <Text style={[s.body, { color: "#87521C" }]}>
+        Prepare essential belongings and monitor official instructions. An evacuation warning is not an order to leave.
+>>>>>>> origin/main
       </Text>
     </Card>
   );

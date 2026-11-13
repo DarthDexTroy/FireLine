@@ -6,11 +6,11 @@ import { useTheme } from "../../context/ThemeContext";
 export default function MapScreen() {
   const { styles } = useTheme();
   return (
-    <Screen title="Wildfire Map" subtitle="Explore the demonstration area.">
+    <Screen title="Wildfire Map" subtitle="Fire, evacuation zones, and your home location.">
       <WildfireMap />
       <Text style={styles.small}>
         Drag to explore. Use + / − to zoom. Select a marker for details. Zones,
-        distances, and roads are simulated and not geographic boundaries.
+        distances, and roads are illustrative.
       </Text>
     </Screen>
   );

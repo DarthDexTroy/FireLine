@@ -141,8 +141,8 @@ export const alerts: DemoAlert[] = [
     time: "5 minutes ago",
     description: "Fire activity has increased near Oak Valley.",
     detail:
-      "In this demonstration, changing wind conditions have increased fire activity along the eastern ridge. Oak Valley and Pine Hollow are affected fictional areas. No real incident is being reported.",
-    action: "Review the simulated map and keep your household plan up to date.",
+      "Changing wind conditions have increased fire activity along the eastern ridge. Oak Valley and Pine Hollow are affected areas.",
+    action: "Review the wildfire map and keep your household plan up to date.",
     preference: "wildfire",
   },
   {
@@ -153,9 +153,9 @@ export const alerts: DemoAlert[] = [
     description:
       "Residents in designated areas should prepare for possible evacuation.",
     detail:
-      "A simulated evacuation warning covers the east side of Oak Valley. A warning means preparation may be needed; it is distinct from an evacuation order. This is a classroom scenario only.",
+      "An evacuation warning covers the east side of Oak Valley. A warning means preparation may be needed; it is distinct from an evacuation order.",
     action:
-      "Prepare essential belongings and review nearby demonstration shelters.",
+      "Prepare essential belongings and review nearby shelter options.",
     preference: "evacuation",
   },
   {
@@ -165,8 +165,8 @@ export const alerts: DemoAlert[] = [
     time: "25 minutes ago",
     description: "Oak Valley Road is temporarily closed in this scenario.",
     detail:
-      "The fictional section of Oak Valley Road near the eastern ridge is marked closed. The illustrated routes are not actual roads or evacuation guidance.",
-    action: "Review the closure marker on the simulated map.",
+      "The section of Oak Valley Road near the eastern ridge is marked closed. Review route guidance before leaving.",
+    action: "Review the closure marker on the wildfire map.",
     preference: "roads",
   },
   {
@@ -175,11 +175,11 @@ export const alerts: DemoAlert[] = [
     severity: "advisory",
     time: "1 hour ago",
     description:
-      "Fire crews continue containment operations in the demo scenario.",
+      "Fire crews continue containment operations near Oak Valley.",
     detail:
-      "Simulated containment is 35%. The scenario remains active while fictional crews work along the northern perimeter.",
+      "Containment is currently 35%. Crews continue working along the northern perimeter.",
     action:
-      "Monitor the demonstration updates and review your preparation checklist.",
+      "Monitor updates and review your preparation checklist.",
     preference: "wildfire",
   },
 ];
@@ -190,6 +190,7 @@ export interface Shelter {
   distanceMiles: number;
   minutes: number;
   petFriendly: boolean;
+  overnight: boolean;
   available: boolean;
   availability: "Available" | "Limited" | "Unavailable";
   facilities: string[];
@@ -200,10 +201,11 @@ export const shelters: Shelter[] = [
   {
     id: "school",
     name: "Oak Valley High School",
-    address: "1200 School Lane, Oak Valley (fictional)",
+    address: "1200 School Lane, Oak Valley",
     distanceMiles: 2.4,
     minutes: 8,
     petFriendly: true,
+    overnight: true,
     available: true,
     availability: "Available",
     facilities: [
@@ -218,10 +220,11 @@ export const shelters: Shelter[] = [
   {
     id: "community",
     name: "Oak Valley Community Center",
-    address: "84 Meadow Avenue, Oak Valley (fictional)",
+    address: "84 Meadow Avenue, Oak Valley",
     distanceMiles: 3.1,
     minutes: 11,
     petFriendly: false,
+    overnight: false,
     available: true,
     availability: "Available",
     facilities: ["Restrooms", "Drinking water", "Accessible entrance"],
@@ -231,10 +234,11 @@ export const shelters: Shelter[] = [
   {
     id: "recreation",
     name: "North Valley Recreation Center",
-    address: "600 North Lane, North Valley (fictional)",
+    address: "600 North Lane, North Valley",
     distanceMiles: 5.2,
     minutes: 17,
     petFriendly: true,
+    overnight: true,
     available: true,
     availability: "Limited",
     facilities: ["Restrooms", "Drinking water", "Pet area"],
@@ -244,10 +248,11 @@ export const shelters: Shelter[] = [
   {
     id: "library",
     name: "Pine Hollow Library",
-    address: "12 Pine Street, Pine Hollow (fictional)",
+    address: "12 Pine Street, Pine Hollow",
     distanceMiles: 4.6,
     minutes: 15,
     petFriendly: false,
+    overnight: false,
     available: false,
     availability: "Unavailable",
     facilities: ["Restrooms", "Accessible entrance"],

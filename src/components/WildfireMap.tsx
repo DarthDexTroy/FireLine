@@ -372,7 +372,7 @@ export function WildfireMap({
               <Badge severity="warning" />
               <Text style={styles.body}>
                 4.8 miles away · Active{"\n"}Evacuation level: Warning{"\n"}
-                Scenario updated 5 minutes ago.
+                Updated 5 minutes ago.
               </Text>
               <Button title="View Alert" href="/updates/evacuation" />
               <Button title="Prepare" href="/prepare/checklist" secondary />
@@ -393,12 +393,17 @@ export function WildfireMap({
             </>
           ) : selected === "home" ? (
             <>
+<<<<<<< HEAD
               <Text style={styles.body}>
                 Your fictional home marker. No GPS data is collected.
+=======
+              <Text style={s.body}>
+                Your home is in Zone B · Evacuation Warning. Prepare essential items and monitor official instructions.
+>>>>>>> origin/main
               </Text>
               <Button
-                title="Change Saved Location"
-                href="/settings/location"
+                title="View Area Status"
+                href="/prepare/status"
                 secondary
               />
             </>

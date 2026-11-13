@@ -8,12 +8,12 @@ import { ThemeProvider, useTheme } from "../context/ThemeContext";
 import { Icon, type IconName } from "../components/UI";
 const tabs: {
   label: string;
-  href: "/" | "/wildfire/map" | "/prepare" | "/prepare/shelters";
+  href: "/" | "/wildfire/map" | "/prepare/checklist" | "/prepare/shelters";
   icon: IconName;
 }[] = [
   { label: "Home", href: "/", icon: "home-outline" },
   { label: "Map", href: "/wildfire/map", icon: "map-outline" },
-  { label: "Prepare", href: "/prepare", icon: "create-outline" },
+  { label: "Prepare", href: "/prepare/checklist", icon: "create-outline" },
   { label: "Shelters", href: "/prepare/shelters", icon: "business-outline" },
 ];
 function Shell() {
@@ -21,6 +21,7 @@ function Shell() {
   const { storageError } = useApp();
   const { theme, storageError: themeStorageError } = useTheme();
   return (
+<<<<<<< HEAD
     <View
       style={{
         flex: 1,
@@ -28,10 +29,14 @@ function Shell() {
         alignItems: "center",
       }}
     >
+=======
+    <View style={{ flex: 1, backgroundColor: "#E9EDEE", alignItems: "center" }}>
+>>>>>>> origin/main
       <SafeAreaView
         style={{
           flex: 1,
           width: "100%",
+<<<<<<< HEAD
           maxWidth: 430,
           backgroundColor: theme.background,
         }}
@@ -55,6 +60,13 @@ function Shell() {
             DEMO MODE · ALL EMERGENCY DATA IS SIMULATED
           </Text>
         </View>
+=======
+          maxWidth: 393,
+          backgroundColor: c.background,
+        }}
+      >
+        <StatusBar style="dark" />
+>>>>>>> origin/main
         {storageError && (
           <Text
             accessibilityRole="alert"
@@ -103,7 +115,7 @@ function Shell() {
             const active =
               tab.href === "/"
                 ? path === "/"
-                : tab.href === "/prepare"
+                : tab.href === "/prepare/checklist"
                   ? path.startsWith("/prepare") &&
                     !path.includes("shelter") &&
                     !path.includes("directions")
@@ -131,7 +143,7 @@ function Shell() {
                 />
                 <Text
                   style={{
-                    fontSize: 10,
+                    fontSize: 9,
                     fontWeight: active ? "700" : "500",
                     color: active ? theme.primary : theme.textMuted,
                   }}
