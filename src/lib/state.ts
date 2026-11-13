@@ -5,7 +5,7 @@ import {
   shelters,
   type Preference,
 } from "../data/demo";
-export const STORAGE_KEY = "fireline-demo-v1";
+export const STORAGE_KEY = "fireline-demo-v3";
 export interface SavedPlan {
   shelterId: string;
   completed: string[];
@@ -48,6 +48,7 @@ export type Action =
   | { type: "read"; ids: string[] }
   | { type: "clear"; ids: string[] }
   | { type: "save"; time: string }
+  | { type: "unsave" }
   | { type: "reset" }
   | { type: "hydrate"; state: DemoState };
 export function reducer(state: DemoState, action: Action): DemoState {
@@ -102,6 +103,8 @@ export function reducer(state: DemoState, action: Action): DemoState {
           }
         : state;
     }
+    case "unsave":
+      return { ...state, plan: null };
   }
 }
 export function restoreState(raw: string): DemoState {

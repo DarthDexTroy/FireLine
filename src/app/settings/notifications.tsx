@@ -12,7 +12,7 @@ export default function Preferences() {
       subtitle="Stay informed, your way."
     >
       <Text style={s.body}>
-        Preferences control which fictional alerts appear in your notification
+        Preferences control which alerts appear in your notification
         center. No real push notifications are sent.
       </Text>
       <Card>
@@ -34,7 +34,7 @@ export default function Preferences() {
       </Card>
       <Text style={s.small}>
         Disabling Critical Alerts hides critical items even when their category
-        is enabled. The Updates feed always contains the full demo scenario.
+        is enabled. The Updates feed always contains the full incident feed.
       </Text>
     </Screen>
   );

@@ -8,42 +8,28 @@ import { Icon, type IconName } from "../components/UI";
 import { colors as c } from "../styles/theme";
 const tabs: {
   label: string;
-  href: "/" | "/wildfire/map" | "/prepare" | "/prepare/shelters";
+  href: "/" | "/wildfire/map" | "/prepare/checklist" | "/prepare/shelters";
   icon: IconName;
 }[] = [
   { label: "Home", href: "/", icon: "home-outline" },
   { label: "Map", href: "/wildfire/map", icon: "map-outline" },
-  { label: "Prepare", href: "/prepare", icon: "create-outline" },
+  { label: "Prepare", href: "/prepare/checklist", icon: "create-outline" },
   { label: "Shelters", href: "/prepare/shelters", icon: "business-outline" },
 ];
 function Shell() {
   const path = usePathname();
   const { storageError } = useApp();
   return (
-    <View style={{ flex: 1, backgroundColor: "#DFE7E4", alignItems: "center" }}>
+    <View style={{ flex: 1, backgroundColor: "#E9EDEE", alignItems: "center" }}>
       <SafeAreaView
         style={{
           flex: 1,
           width: "100%",
-          maxWidth: 430,
+          maxWidth: 393,
           backgroundColor: c.background,
         }}
       >
         <StatusBar style="dark" />
-        <View
-          style={{ backgroundColor: c.pale, padding: 8, alignItems: "center" }}
-        >
-          <Text
-            style={{
-              fontSize: 10,
-              color: c.green,
-              fontWeight: "600",
-              letterSpacing: 0.8,
-            }}
-          >
-            DEMO MODE · ALL EMERGENCY DATA IS SIMULATED
-          </Text>
-        </View>
         {storageError && (
           <Text
             accessibilityRole="alert"
@@ -74,7 +60,7 @@ function Shell() {
             const active =
               tab.href === "/"
                 ? path === "/"
-                : tab.href === "/prepare"
+                : tab.href === "/prepare/checklist"
                   ? path.startsWith("/prepare") &&
                     !path.includes("shelter") &&
                     !path.includes("directions")
@@ -102,7 +88,7 @@ function Shell() {
                 />
                 <Text
                   style={{
-                    fontSize: 10,
+                    fontSize: 9,
                     fontWeight: active ? "700" : "500",
                     color: active ? c.primary : "#74868D",
                   }}
