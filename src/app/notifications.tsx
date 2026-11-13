@@ -5,11 +5,6 @@ import { useApp } from "../context/AppContext";
 import { useTheme } from "../context/ThemeContext";
 import { visibleNotifications } from "../lib/state";
 import { Badge, Button, Card, Empty, Screen } from "../components/UI";
-<<<<<<< HEAD
-=======
-import { styles as s, colors as c } from "../styles/theme";
-
->>>>>>> origin/main
 export default function Notifications() {
   const { state, dispatch } = useApp();
   const { styles, theme } = useTheme();
@@ -33,17 +28,10 @@ export default function Notifications() {
                   {state.read.includes(alert.id) ? "Read" : "● Unread"}
                 </Text>
               </View>
-<<<<<<< HEAD
               <Text style={styles.heading}>{alert.title}</Text>
               <Text style={styles.body}>{alert.description}</Text>
               <Text style={styles.small}>
                 Scenario near {state.location} · {alert.time}
-=======
-              <Text style={s.heading}>{alert.title}</Text>
-              <Text style={s.body}>{alert.description}</Text>
-              <Text style={s.small}>
-                Near {state.location} · {alert.time}
->>>>>>> origin/main
               </Text>
               <Button
                 title="Open Update"
@@ -62,7 +50,11 @@ export default function Notifications() {
                 onPress={() => dispatch({ type: "clear", ids: [alert.id] })}
                 style={{ minHeight: 44, justifyContent: "center" }}
               >
-                <Text style={{ color: c.primary, fontWeight: "700", fontSize: 13 }}>Clear Notification</Text>
+                <Text
+                  style={{ color: theme.primary, fontWeight: "700", fontSize: 13 }}
+                >
+                  Clear Notification
+                </Text>
               </Pressable>
             </Card>
           ))}

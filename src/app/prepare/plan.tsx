@@ -10,13 +10,9 @@ import {
   Card,
   Detail,
   Icon,
+  Progress,
   Screen,
 } from "../../components/UI";
-<<<<<<< HEAD
-=======
-import { styles as s, colors as c } from "../../styles/theme";
-
->>>>>>> origin/main
 export default function Plan() {
   const { state, dispatch, persist } = useApp();
   const { styles, theme } = useTheme();
@@ -69,7 +65,6 @@ export default function Plan() {
   return (
     <Screen title="My Evacuation Plan" subtitle="Your checklist and selected destination.">
       <Card>
-<<<<<<< HEAD
         <Icon name="shield-checkmark-outline" size={38} />
         <Text style={styles.heading}>
           {state.completed.length === 14
@@ -81,16 +76,6 @@ export default function Plan() {
         <Text style={styles.body}>
           Evacuation status: Prepare to Evacuate · Simulated
         </Text>
-=======
-        <View style={{ alignItems: "center", gap: 10 }}>
-          <View style={{ width: 64, height: 64, borderRadius: 32, backgroundColor: "#E6F6EE", alignItems: "center", justifyContent: "center" }}>
-            <Icon name="shield-checkmark-outline" size={38} color="#1F8A5C" />
-          </View>
-          <Text style={[s.heading, { fontSize: 18 }]}>Plan Ready</Text>
-          <Text style={[s.small, { textAlign: "center" }]}>{state.completed.length} optional checklist items marked packed</Text>
-          <Badge severity="warning" />
-        </View>
->>>>>>> origin/main
       </Card>
 
       <Card>
@@ -100,17 +85,12 @@ export default function Plan() {
         />
         {shelter ? (
           <>
-            <View style={s.divider} />
+            <View style={styles.divider} />
             <Detail label="Route" value={`Home → ${shelter.name}`} />
             <Detail label="Starting location" value={state.location} />
-<<<<<<< HEAD
             <Text style={styles.small}>
               {shelter.distanceMiles} miles · About {shelter.minutes} minutes ·
               Simulated
-=======
-            <Text style={s.small}>
-              {shelter.distanceMiles} miles · About {shelter.minutes} minutes
->>>>>>> origin/main
             </Text>
           </>
         ) : (

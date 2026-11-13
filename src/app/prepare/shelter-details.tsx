@@ -3,10 +3,7 @@ import { Image, Text, View } from "react-native";
 import { router, useLocalSearchParams } from "expo-router";
 import { shelters } from "../../data/demo";
 import { useApp } from "../../context/AppContext";
-import { useTheme } from "../../context/ThemeContext";
 import { Button, Card, Detail, Empty, Icon, Screen } from "../../components/UI";
-<<<<<<< HEAD
-=======
 import { styles as s, colors as c } from "../../styles/theme";
 
 const shelterImages = {
@@ -15,13 +12,10 @@ const shelterImages = {
   recreation: require("../../../assets/images/shelter-recreation.png"),
   library: require("../../../assets/images/shelter-library.png"),
 } as const;
-
->>>>>>> origin/main
 export default function ShelterDetails() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const shelter = shelters.find((s) => s.id === id);
   const { dispatch, state } = useApp();
-  const { styles, theme } = useTheme();
   return (
     <Screen title="Shelter Details">
       {!shelter ? (
@@ -29,46 +23,6 @@ export default function ShelterDetails() {
       ) : (
         <>
           <Card>
-<<<<<<< HEAD
-            <View
-              style={{
-                backgroundColor: theme.surfaceMuted,
-                height: 110,
-                borderRadius: 14,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Icon name="school-outline" size={58} />
-            </View>
-            <Text style={styles.title}>{shelter.name}</Text>
-            <Text style={styles.body}>{shelter.address}</Text>
-            <View style={styles.divider} />
-            <Detail
-              label="Distance from scenario home"
-              value={`${shelter.distanceMiles} miles · ${shelter.minutes} min`}
-            />
-            <Detail
-              label="Simulated availability"
-              value={shelter.availability}
-            />
-            <Detail
-              label="Pet friendly"
-              value={
-                shelter.petFriendly
-                  ? "Yes · Pets welcome"
-                  : "No · No pet accommodations"
-              }
-            />
-          </Card>
-          <Card>
-            <Text style={styles.heading}>Facilities</Text>
-            {shelter.facilities.map((f) => (
-              <View style={styles.row} key={f}>
-                <Icon name="checkmark-circle-outline" size={20} />
-                <Text style={styles.body}>{f}</Text>
-              </View>
-=======
             <Image source={shelterImages[shelter.id as keyof typeof shelterImages]} resizeMode="cover" style={{width:"100%",height:174,borderRadius:13}}/>
             <Text style={s.title}>{shelter.name}</Text>
             <Text style={s.body}>{shelter.address}</Text>
@@ -86,7 +40,6 @@ export default function ShelterDetails() {
             <Text style={s.heading}>Amenities</Text>
             {shelter.facilities.map((facility) => (
               <View style={s.row} key={facility}><Icon name="checkmark-circle-outline" size={18} /><Text style={s.body}>{facility}</Text></View>
->>>>>>> origin/main
             ))}
           </Card>
           {!shelter.available && <Text style={{ color: c.red, fontWeight: "600" }}>This shelter is unavailable. Choose another shelter.</Text>}

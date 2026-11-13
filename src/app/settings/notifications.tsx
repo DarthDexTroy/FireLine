@@ -12,13 +12,8 @@ export default function Preferences() {
       title="Notification Preferences"
       subtitle="Stay informed, your way."
     >
-<<<<<<< HEAD
       <Text style={styles.body}>
         Preferences control which fictional alerts appear in your notification
-=======
-      <Text style={s.body}>
-        Preferences control which alerts appear in your notification
->>>>>>> origin/main
         center. No real push notifications are sent.
       </Text>
       <Card>

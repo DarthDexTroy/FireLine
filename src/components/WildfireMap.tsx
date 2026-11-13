@@ -393,13 +393,8 @@ export function WildfireMap({
             </>
           ) : selected === "home" ? (
             <>
-<<<<<<< HEAD
               <Text style={styles.body}>
-                Your fictional home marker. No GPS data is collected.
-=======
-              <Text style={s.body}>
                 Your home is in Zone B · Evacuation Warning. Prepare essential items and monitor official instructions.
->>>>>>> origin/main
               </Text>
               <Button
                 title="View Area Status"

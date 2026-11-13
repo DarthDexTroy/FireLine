@@ -1,5 +1,4 @@
 import React from "react";
-<<<<<<< HEAD
 import { Text, View } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { alerts } from "../../data/demo";
@@ -62,7 +61,3 @@ export default function AlertDetails() {
     </Screen>
   );
 }
-=======
-import { Redirect } from "expo-router";
-export default function LegacyAlertDetails() { return <Redirect href="/updates"/>; }
->>>>>>> origin/main

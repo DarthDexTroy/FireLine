@@ -1,5 +1,4 @@
 import React from "react";
-<<<<<<< HEAD
 import { Text, View } from "react-native";
 import { categories, checklist } from "../../data/demo";
 import { useApp } from "../../context/AppContext";
@@ -44,11 +43,4 @@ export default function NextSteps() {
       <Button title="View My Plan" href="/prepare/plan" secondary />
     </Screen>
   );
-=======
-import { Redirect } from "expo-router";
-
-// Existing links to this legacy page now go straight to the relevant action.
-export default function NextSteps() {
-  return <Redirect href="/prepare/shelters" />;
->>>>>>> origin/main
 }

@@ -21,7 +21,6 @@ function Shell() {
   const { storageError } = useApp();
   const { theme, storageError: themeStorageError } = useTheme();
   return (
-<<<<<<< HEAD
     <View
       style={{
         flex: 1,
@@ -29,14 +28,10 @@ function Shell() {
         alignItems: "center",
       }}
     >
-=======
-    <View style={{ flex: 1, backgroundColor: "#E9EDEE", alignItems: "center" }}>
->>>>>>> origin/main
       <SafeAreaView
         style={{
           flex: 1,
           width: "100%",
-<<<<<<< HEAD
           maxWidth: 430,
           backgroundColor: theme.background,
         }}
@@ -60,13 +55,6 @@ function Shell() {
             DEMO MODE · ALL EMERGENCY DATA IS SIMULATED
           </Text>
         </View>
-=======
-          maxWidth: 393,
-          backgroundColor: c.background,
-        }}
-      >
-        <StatusBar style="dark" />
->>>>>>> origin/main
         {storageError && (
           <Text
             accessibilityRole="alert"
