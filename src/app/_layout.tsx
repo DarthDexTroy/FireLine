@@ -24,7 +24,7 @@ function Shell() {
     <View
       style={{
         flex: 1,
-        backgroundColor: theme.backgroundAlt,
+        backgroundColor: theme.mode === "dark" ? theme.backgroundAlt : "#E9EDEE",
         alignItems: "center",
       }}
     >
@@ -32,29 +32,11 @@ function Shell() {
         style={{
           flex: 1,
           width: "100%",
-          maxWidth: 430,
+          maxWidth: 393,
           backgroundColor: theme.background,
         }}
       >
         <StatusBar style={theme.statusBar} />
-        <View
-          style={{
-            backgroundColor: theme.demoBannerBackground,
-            padding: 8,
-            alignItems: "center",
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 10,
-              color: theme.demoBannerText,
-              fontWeight: "600",
-              letterSpacing: 0.8,
-            }}
-          >
-            DEMO MODE · ALL EMERGENCY DATA IS SIMULATED
-          </Text>
-        </View>
         {storageError && (
           <Text
             accessibilityRole="alert"

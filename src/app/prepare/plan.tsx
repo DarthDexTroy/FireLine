@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Platform, Pressable, Share, Text, View } from "react-native";
 import { shelters } from "../../data/demo";
 import { useApp } from "../../context/AppContext";
-import { useTheme } from "../../context/ThemeContext";
 import { reducer } from "../../lib/state";
 import {
   Badge,
@@ -10,12 +9,11 @@ import {
   Card,
   Detail,
   Icon,
-  Progress,
   Screen,
 } from "../../components/UI";
+import { styles as s, colors as c } from "../../styles/theme";
 export default function Plan() {
   const { state, dispatch, persist } = useApp();
-  const { styles, theme } = useTheme();
   const shelter = shelters.find((s) => s.id === state.shelterId);
   const [message, setMessage] = useState("");
   const [saving, setSaving] = useState(false);
@@ -65,17 +63,14 @@ export default function Plan() {
   return (
     <Screen title="My Evacuation Plan" subtitle="Your checklist and selected destination.">
       <Card>
-        <Icon name="shield-checkmark-outline" size={38} />
-        <Text style={styles.heading}>
-          {state.completed.length === 14
-            ? "Checklist complete"
-            : "Your plan is taking shape"}
-        </Text>
-        <Progress />
-        <Badge severity="warning" />
-        <Text style={styles.body}>
-          Evacuation status: Prepare to Evacuate · Simulated
-        </Text>
+        <View style={{ alignItems: "center", gap: 10 }}>
+          <View style={{ width: 64, height: 64, borderRadius: 32, backgroundColor: "#E6F6EE", alignItems: "center", justifyContent: "center" }}>
+            <Icon name="shield-checkmark-outline" size={38} color="#1F8A5C" />
+          </View>
+          <Text style={[s.heading, { fontSize: 18 }]}>Plan Ready</Text>
+          <Text style={[s.small, { textAlign: "center" }]}>{state.completed.length} optional checklist items marked packed</Text>
+          <Badge severity="warning" />
+        </View>
       </Card>
 
       <Card>
@@ -85,12 +80,11 @@ export default function Plan() {
         />
         {shelter ? (
           <>
-            <View style={styles.divider} />
+            <View style={s.divider} />
             <Detail label="Route" value={`Home → ${shelter.name}`} />
             <Detail label="Starting location" value={state.location} />
-            <Text style={styles.small}>
-              {shelter.distanceMiles} miles · About {shelter.minutes} minutes ·
-              Simulated
+            <Text style={s.small}>
+              {shelter.distanceMiles} miles · About {shelter.minutes} minutes
             </Text>
           </>
         ) : (
@@ -99,7 +93,7 @@ export default function Plan() {
       </Card>
 
       {state.plan && (
-        <Text style={styles.small}>
+        <Text style={s.small}>
           Last saved: {new Date(state.plan.editedAt).toLocaleString()}
           {changed
             ? "\nYour current changes have not been saved yet."
@@ -111,8 +105,8 @@ export default function Plan() {
         <Text
           accessibilityRole="alert"
           style={{
-            color: theme.accent,
-            backgroundColor: theme.surfaceMuted,
+            color: c.green,
+            backgroundColor: c.pale,
             borderRadius: 12,
             padding: 15,
           }}

@@ -20,12 +20,12 @@ export function createTextStyles(theme: AppTheme) {
     },
     heading: {
       color: theme.text,
-      fontSize: 20,
+      fontSize: 18,
       fontWeight: "700",
       letterSpacing: -0.4,
     },
     subheading: { color: theme.text, fontSize: 16, fontWeight: "600" },
-    body: { color: theme.textSecondary, fontSize: 14, lineHeight: 22 },
+    body: { color: theme.textSecondary, fontSize: 14, lineHeight: 21 },
     small: { color: theme.textSecondary, fontSize: 12, lineHeight: 18 },
     eyebrow: {
       color: theme.accent,
@@ -36,8 +36,8 @@ export function createTextStyles(theme: AppTheme) {
     },
     card: {
       backgroundColor: theme.surface,
-      borderRadius: 20,
-      padding: 20,
+      borderRadius: 15,
+      padding: 16,
       borderWidth: 1,
       borderColor: theme.border,
       gap: 14,

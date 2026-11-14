@@ -14,7 +14,6 @@ import { router, type Href } from "expo-router";
 import { useApp } from "../context/AppContext";
 import { useTheme } from "../context/ThemeContext";
 import { checklist, type Severity } from "../data/demo";
-import { ThemeToggle } from "./ThemeToggle";
 export type IconName = React.ComponentProps<typeof Ionicons>["name"];
 export function Icon({
   name,
@@ -157,12 +156,11 @@ export function Screen({
           />
         )}
         <View style={{ flex: 1 }}>
-          <Text style={styles.title}>{title}</Text>
+          <Text style={[styles.title, { fontSize: 23 }]}>{title}</Text>
           {subtitle && (
             <Text style={[styles.body, { marginTop: 6 }]}>{subtitle}</Text>
           )}
         </View>
-        <ThemeToggle />
       </View>
       {children}
     </ScrollView>

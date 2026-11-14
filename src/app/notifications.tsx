@@ -7,7 +7,7 @@ import { visibleNotifications } from "../lib/state";
 import { Badge, Button, Card, Empty, Screen } from "../components/UI";
 export default function Notifications() {
   const { state, dispatch } = useApp();
-  const { styles, theme } = useTheme();
+  const { styles: s, theme: c } = useTheme();
   const notifications = visibleNotifications(state);
   return (
     <Screen title="Notifications" subtitle="Your local alerts.">
@@ -18,20 +18,20 @@ export default function Notifications() {
               key={alert.id}
               style={{
                 borderColor: state.read.includes(alert.id)
-                  ? theme.border
-                  : theme.selectedBorder,
+                  ? c.border
+                  : "#8EB59E",
               }}
             >
-              <View style={styles.between}>
+              <View style={s.between}>
                 <Badge severity={alert.severity} />
-                <Text style={styles.small}>
+                <Text style={s.small}>
                   {state.read.includes(alert.id) ? "Read" : "● Unread"}
                 </Text>
               </View>
-              <Text style={styles.heading}>{alert.title}</Text>
-              <Text style={styles.body}>{alert.description}</Text>
-              <Text style={styles.small}>
-                Scenario near {state.location} · {alert.time}
+              <Text style={s.heading}>{alert.title}</Text>
+              <Text style={s.body}>{alert.description}</Text>
+              <Text style={s.small}>
+                Near {state.location} · {alert.time}
               </Text>
               <Button
                 title="Open Update"
@@ -50,11 +50,7 @@ export default function Notifications() {
                 onPress={() => dispatch({ type: "clear", ids: [alert.id] })}
                 style={{ minHeight: 44, justifyContent: "center" }}
               >
-                <Text
-                  style={{ color: theme.primary, fontWeight: "700", fontSize: 13 }}
-                >
-                  Clear Notification
-                </Text>
+                <Text style={{ color: c.primary, fontWeight: "700", fontSize: 13 }}>Clear Notification</Text>
               </Pressable>
             </Card>
           ))}
