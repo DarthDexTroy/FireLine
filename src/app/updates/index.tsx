@@ -36,8 +36,19 @@ const sources: Record<string, { label: string; url: string }> = {
 export default function Updates() {
   const { open } = useLocalSearchParams<{ open?: string }>();
   const { styles, theme } = useTheme();
-  const initialSelected = open ? alerts.find((a) => a.id === open) ?? null : null;
-  const [selected, setSelected] = useState<DemoAlert | null>(initialSelected);
+  const [manualSelection, setManualSelection] = useState<DemoAlert | null>(null);
+const [dismissedOpen, setDismissedOpen] = useState<string | null>(null);
+
+const selected =
+  manualSelection ??
+  (open && dismissedOpen !== open
+    ? alerts.find((a) => a.id === open) ?? null
+    : null);
+
+const setSelected = (alert: DemoAlert | null) => {
+  setManualSelection(alert);
+  setDismissedOpen(alert === null ? open ?? null : null);
+};
   const { width } = useWindowDimensions();
   const [refreshing, setRefreshing] = useState(false);
   const [lastChecked, setLastChecked] = useState("Not checked in this session");
