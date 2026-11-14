@@ -2,12 +2,12 @@ import React from "react";
 import { Pressable, Text, View } from "react-native";
 import { router } from "expo-router";
 import { useApp } from "../context/AppContext";
+import { useTheme } from "../context/ThemeContext";
 import { visibleNotifications } from "../lib/state";
 import { Badge, Button, Card, Empty, Screen } from "../components/UI";
-import { styles as s, colors as c } from "../styles/theme";
-
 export default function Notifications() {
   const { state, dispatch } = useApp();
+  const { styles: s, theme: c } = useTheme();
   const notifications = visibleNotifications(state);
   return (
     <Screen title="Notifications" subtitle="Your local alerts.">

@@ -11,20 +11,21 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { router, type Href } from "expo-router";
-import { colors as c, styles as s } from "../styles/theme";
 import { useApp } from "../context/AppContext";
+import { useTheme } from "../context/ThemeContext";
 import { checklist, type Severity } from "../data/demo";
 export type IconName = React.ComponentProps<typeof Ionicons>["name"];
 export function Icon({
   name,
-  color = c.green,
+  color,
   size = 22,
 }: {
   name: IconName;
   color?: string;
   size?: number;
 }) {
-  return <Ionicons name={name} color={color} size={size} />;
+  const { theme } = useTheme();
+  return <Ionicons name={name} color={color ?? theme.icon} size={size} />;
 }
 export function Button({
   title,
@@ -41,6 +42,7 @@ export function Button({
   icon?: IconName;
   disabled?: boolean;
 }) {
+  const { theme } = useTheme();
   return (
     <Pressable
       accessibilityRole="button"
@@ -54,22 +56,28 @@ export function Button({
         paddingHorizontal: 18,
         paddingVertical: 12,
         borderRadius: 14,
-        backgroundColor: secondary ? "#FFFFFF" : c.primary,
+        backgroundColor: secondary
+          ? theme.secondaryButtonBackground
+          : theme.primary,
         alignItems: "center",
         justifyContent: "center",
         flexDirection: "row",
         gap: 8,
-        borderWidth: 1,
-        borderColor: secondary ? c.border : c.primary,
         opacity: disabled ? 0.45 : pressed ? 0.75 : 1,
+        borderWidth: 1,
+        borderColor: secondary ? theme.secondaryButtonBorder : theme.primary,
       })}
     >
       {icon && (
-        <Icon name={icon} color={secondary ? c.navy : "white"} size={18} />
+        <Icon
+          name={icon}
+          color={secondary ? theme.secondaryButtonText : theme.textOnPrimary}
+          size={18}
+        />
       )}
       <Text
         style={{
-          color: secondary ? c.navy : "white",
+          color: secondary ? theme.secondaryButtonText : theme.textOnPrimary,
           fontSize: 14,
           fontWeight: "600",
           textAlign: "center",
@@ -89,6 +97,7 @@ export function IconButton({
   label: string;
   onPress: () => void;
 }) {
+  const { theme } = useTheme();
   return (
     <Pressable
       accessibilityRole="button"
@@ -100,12 +109,12 @@ export function IconButton({
         borderRadius: 14,
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: pressed ? c.pale : c.white,
+        backgroundColor: pressed ? theme.surfaceMuted : theme.surface,
         borderWidth: 1,
-        borderColor: c.border,
+        borderColor: theme.border,
       })}
     >
-      <Icon name={name} color={c.navy} />
+      <Icon name={name} color={theme.text} />
     </Pressable>
   );
 }
@@ -116,7 +125,8 @@ export function Card({
   children: React.ReactNode;
   style?: StyleProp<ViewStyle>;
 }) {
-  return <View style={[s.card, style]}>{children}</View>;
+  const { styles } = useTheme();
+  return <View style={[styles.card, style]}>{children}</View>;
 }
 export function Screen({
   children,
@@ -125,6 +135,7 @@ export function Screen({
   back = true,
   ...props
 }: ScrollViewProps & { title: string; subtitle?: string; back?: boolean }) {
+  const { styles } = useTheme();
   return (
     <ScrollView
       {...props}
@@ -134,7 +145,7 @@ export function Screen({
       ]}
       showsVerticalScrollIndicator={false}
     >
-      <View style={s.row}>
+      <View style={styles.row}>
         {back && (
           <IconButton
             name="arrow-back"
@@ -145,9 +156,9 @@ export function Screen({
           />
         )}
         <View style={{ flex: 1 }}>
-          <Text style={[s.title,{fontSize:23}]}>{title}</Text>
+          <Text style={[styles.title, { fontSize: 23 }]}>{title}</Text>
           {subtitle && (
-            <Text style={[s.body, { marginTop: 6 }]}>{subtitle}</Text>
+            <Text style={[styles.body, { marginTop: 6 }]}>{subtitle}</Text>
           )}
         </View>
       </View>
@@ -156,11 +167,19 @@ export function Screen({
   );
 }
 export function Badge({ severity }: { severity: Severity }) {
-  const values = {
-    critical: ["#FCE9E9", "#A82C2C", "alert-circle"],
-    warning: ["#FFF0D9", "#935813", "warning"],
-    advisory: ["#FFF7D6", "#7C6512", "information-circle"],
-  } as const;
+  const { mode } = useTheme();
+  const values =
+    mode === "dark"
+      ? {
+          critical: ["#5E2525", "#FFB3B3", "alert-circle"],
+          warning: ["#604626", "#FFD8A4", "warning"],
+          advisory: ["#5B4F2A", "#FFE8B5", "information-circle"],
+        }
+      : {
+          critical: ["#FCE9E9", "#A82C2C", "alert-circle"],
+          warning: ["#FFF0D9", "#935813", "warning"],
+          advisory: ["#FFF7D6", "#7C6512", "information-circle"],
+        };
   const [bg, fg, icon] = values[severity];
   return (
     <View
@@ -175,7 +194,7 @@ export function Badge({ severity }: { severity: Severity }) {
         borderRadius: 8,
       }}
     >
-      <Icon name={icon} color={fg} size={14} />
+      <Icon name={icon as IconName} color={fg} size={14} />
       <Text
         style={{
           color: fg,
@@ -192,6 +211,7 @@ export function Badge({ severity }: { severity: Severity }) {
 }
 export function Progress({ compact = false }: { compact?: boolean }) {
   const { state } = useApp();
+  const { styles, theme } = useTheme();
   const completed = state.completed.length;
   const percent = Math.round((completed / checklist.length) * 100);
   const [animated] = useState(() => new Animated.Value(percent));
@@ -204,11 +224,11 @@ export function Progress({ compact = false }: { compact?: boolean }) {
   }, [percent, animated]);
   return (
     <View style={{ gap: 12 }}>
-      <View style={s.between}>
-        <Text style={s.subheading}>
+      <View style={styles.between}>
+        <Text style={styles.subheading}>
           {compact ? "Your readiness" : `Preparation ${percent}% Complete`}
         </Text>
-        <Text style={{ fontSize: 13, fontWeight: "700", color: c.green }}>
+        <Text style={{ fontSize: 13, fontWeight: "700", color: theme.accent }}>
           {percent}%
         </Text>
       </View>
@@ -220,7 +240,7 @@ export function Progress({ compact = false }: { compact?: boolean }) {
         aria-valuemax={14}
         aria-valuenow={completed}
         style={{
-          backgroundColor: "#DEE9E3",
+          backgroundColor: theme.progressTrack,
           height: 8,
           borderRadius: 4,
           overflow: "hidden",
@@ -229,7 +249,7 @@ export function Progress({ compact = false }: { compact?: boolean }) {
         <Animated.View
           style={{
             height: 8,
-            backgroundColor: c.green,
+            backgroundColor: theme.accent,
             borderRadius: 4,
             width: animated.interpolate({
               inputRange: [0, 100],
@@ -238,7 +258,7 @@ export function Progress({ compact = false }: { compact?: boolean }) {
           }}
         />
       </View>
-      <Text style={s.small}>
+      <Text style={styles.small}>
         {completed} of {checklist.length} items packed
         {completed === 14
           ? " · Checklist complete"
@@ -256,16 +276,19 @@ export function Section({
   label?: string;
   href?: Href;
 }) {
+  const { styles, theme } = useTheme();
   return (
-    <View style={s.between}>
-      <Text style={s.heading}>{title}</Text>
+    <View style={styles.between}>
+      <Text style={styles.heading}>{title}</Text>
       {href && (
         <Pressable
           accessibilityRole="link"
           onPress={() => router.push(href)}
           style={{ minHeight: 44, justifyContent: "center" }}
         >
-          <Text style={{ color: c.green, fontSize: 12, fontWeight: "600" }}>
+          <Text
+            style={{ color: theme.accent, fontSize: 12, fontWeight: "600" }}
+          >
             {label || "View all"} →
           </Text>
         </Pressable>
@@ -274,10 +297,11 @@ export function Section({
   );
 }
 export function Detail({ label, value }: { label: string; value: string }) {
+  const { styles } = useTheme();
   return (
     <View style={{ gap: 4 }}>
-      <Text style={s.small}>{label}</Text>
-      <Text style={s.subheading}>{value}</Text>
+      <Text style={styles.small}>{label}</Text>
+      <Text style={styles.subheading}>{value}</Text>
     </View>
   );
 }
@@ -292,26 +316,34 @@ export function Empty({
   href?: Href;
   button?: string;
 }) {
+  const { styles } = useTheme();
   return (
     <Card>
       <Icon name="information-circle-outline" size={32} />
-      <Text style={s.heading}>{title}</Text>
-      <Text style={s.body}>{detail}</Text>
+      <Text style={styles.heading}>{title}</Text>
+      <Text style={styles.body}>{detail}</Text>
       <Button title={button} href={href} />
     </Card>
   );
 }
 export function Warning() {
+  const { styles, theme } = useTheme();
   return (
-    <Card style={{ backgroundColor: "#FFF6E8", borderColor: "#F0D6AD" }}>
-      <View style={s.row}>
-        <Icon name="warning-outline" color="#986021" />
-        <Text style={[s.subheading, { color: "#87521C" }]}>
+    <Card
+      style={{
+        backgroundColor: theme.warningCardBackground,
+        borderColor: theme.warningCardBorder,
+      }}
+    >
+      <View style={styles.row}>
+        <Icon name="warning-outline" color={theme.warningCardText} />
+        <Text style={[styles.subheading, { color: theme.warningCardText }]}>
           Evacuation Warning
         </Text>
       </View>
-      <Text style={[s.body, { color: "#87521C" }]}>
-        Prepare essential belongings and monitor official instructions. An evacuation warning is not an order to leave.
+      <Text style={[styles.body, { color: theme.warningCardText }]}>
+        Prepare your household in case an evacuation order is issued in this
+        simulated scenario.
       </Text>
     </Card>
   );
