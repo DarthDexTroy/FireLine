@@ -39,7 +39,7 @@
     "typecheck": "tsc --noEmit",
     "lint": "expo lint",
     "test": "tsx --test tests/*.test.ts",
-    "export:web": "expo export --platform web",
+    "export:web": "expo export --platform web && node scripts/postexport-web.mjs dist",
     "format": "prettier --write src tests *.json *.js README.md"
   },
   "private": true,
