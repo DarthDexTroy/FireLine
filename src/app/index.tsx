@@ -283,6 +283,59 @@ export default function Home() {
         </Text>
       </Pressable>
 
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel="Emergency Contacts, call for help"
+        onPress={() => router.push("/contacts")}
+        style={({ pressed }) => ({
+          backgroundColor: theme.surface,
+          borderColor: theme.border,
+          borderWidth: 1,
+          borderRadius: 16,
+          padding: 14,
+          gap: 9,
+          opacity: pressed ? 0.8 : 1,
+        })}
+      >
+        <Text
+          style={{
+            fontWeight: "800",
+            color: theme.text,
+            fontSize: 15,
+          }}
+        >
+          Emergency Contacts
+        </Text>
+        <View style={[s.row, { gap: 9 }]}>
+          <Icon name="call" size={25} color={theme.danger} />
+          <View style={{ flex: 1, gap: 2 }}>
+            <Text
+              style={{
+                fontSize: 15,
+                fontWeight: "700",
+                color: theme.text,
+              }}
+            >
+              911, CAL FIRE, and county help
+            </Text>
+            <Text
+              style={{
+                fontSize: 12,
+                color: theme.textSecondary,
+                fontWeight: "600",
+              }}
+            >
+              One tap to call
+            </Text>
+          </View>
+          <Icon
+            name="chevron-forward"
+            color={theme.textSecondary}
+            size={18}
+          />
+        </View>
+      </Pressable>
+
       <View style={{ flexDirection: "row", gap: 10 }}>
         <Pressable
           onPress={() => router.push("/updates")}
