@@ -4,8 +4,8 @@ import { Pressable, Text, View } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import { AppProvider, useApp } from "../context/AppContext";
+import { ThemeProvider, useTheme } from "../context/ThemeContext";
 import { Icon, type IconName } from "../components/UI";
-import { colors as c } from "../styles/theme";
 const tabs: {
   label: string;
   href: "/" | "/wildfire/map" | "/prepare/checklist" | "/prepare/shelters";
@@ -19,38 +19,63 @@ const tabs: {
 function Shell() {
   const path = usePathname();
   const { storageError } = useApp();
+  const { theme, storageError: themeStorageError } = useTheme();
   return (
-    <View style={{ flex: 1, backgroundColor: "#E9EDEE", alignItems: "center" }}>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: theme.mode === "dark" ? theme.backgroundAlt : "#E9EDEE",
+        alignItems: "center",
+      }}
+    >
       <SafeAreaView
         style={{
           flex: 1,
           width: "100%",
           maxWidth: 393,
-          backgroundColor: c.background,
+          backgroundColor: theme.background,
         }}
       >
-        <StatusBar style="dark" />
+        <StatusBar style={theme.statusBar} />
         {storageError && (
           <Text
             accessibilityRole="alert"
-            style={{ backgroundColor: "#FFF0D9", padding: 12, fontSize: 12 }}
+            style={{
+              backgroundColor: theme.routeNoticeBackground,
+              color: theme.routeNoticeText,
+              padding: 12,
+              fontSize: 12,
+            }}
           >
             {storageError}
+          </Text>
+        )}
+        {themeStorageError && (
+          <Text
+            accessibilityRole="alert"
+            style={{
+              backgroundColor: theme.warningCardBackground,
+              color: theme.warningCardText,
+              padding: 12,
+              fontSize: 12,
+            }}
+          >
+            {themeStorageError}
           </Text>
         )}
         <View style={{ flex: 1 }}>
           <Stack
             screenOptions={{
               headerShown: false,
-              contentStyle: { backgroundColor: c.background },
+              contentStyle: { backgroundColor: theme.background },
             }}
           />
         </View>
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "white",
-            borderTopColor: c.border,
+            backgroundColor: theme.tabBarBackground,
+            borderTopColor: theme.tabBarBorder,
             borderTopWidth: 1,
             paddingTop: 8,
             paddingBottom: 8,
@@ -83,14 +108,14 @@ function Shell() {
               >
                 <Icon
                   name={tab.icon}
-                  color={active ? c.primary : "#8A999E"}
+                  color={active ? theme.primary : theme.iconMuted}
                   size={22}
                 />
                 <Text
                   style={{
                     fontSize: 9,
                     fontWeight: active ? "700" : "500",
-                    color: active ? c.primary : "#74868D",
+                    color: active ? theme.primary : theme.textMuted,
                   }}
                 >
                   {tab.label}
@@ -106,9 +131,11 @@ function Shell() {
 export default function Layout() {
   return (
     <SafeAreaProvider>
-      <AppProvider>
-        <Shell />
-      </AppProvider>
+      <ThemeProvider>
+        <AppProvider>
+          <Shell />
+        </AppProvider>
+      </ThemeProvider>
     </SafeAreaProvider>
   );
 }

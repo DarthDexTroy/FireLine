@@ -16,6 +16,7 @@ import {
   type Action,
   type DemoState,
 } from "../lib/state";
+import { useTheme } from "./ThemeContext";
 const Context = createContext<{
   state: DemoState;
   dispatch: React.Dispatch<Action>;
@@ -23,6 +24,7 @@ const Context = createContext<{
   persist: (state: DemoState) => Promise<boolean>;
 } | null>(null);
 export function AppProvider({ children }: { children: React.ReactNode }) {
+  const { theme } = useTheme();
   const [state, dispatch] = useReducer(reducer, undefined, initialState);
   const [ready, setReady] = useState(false);
   const [storageError, setError] = useState<string | null>(null);
@@ -78,11 +80,12 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
           flex: 1,
           alignItems: "center",
           justifyContent: "center",
+          backgroundColor: theme.background,
           gap: 16,
         }}
       >
-        <ActivityIndicator color="#2E6657" />
-        <Text>Opening Fireline…</Text>
+        <ActivityIndicator color={theme.accent} />
+        <Text style={{ color: theme.text }}>Opening Fireline…</Text>
       </View>
     );
   return (
